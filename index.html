@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Materiais</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, label {
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 13px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      line-height: 50px;
+      font-size: 50px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 20px 0  #004d00;
+      }
+      .banner {
+      position: relative;
+      height: 320px;
+      background-color: #03203b;  
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.4);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      input{
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input{
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      input[type="date"] {
+      padding: 4px 5px;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+      color:#004d00;
+      }
+      .item input:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #004d00;
+      color:#004d00;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      .item span {
+      color: red;
+      }
+
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 1%;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      .btn-next {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #004d00;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #008000;
+      }
+
+
+      @media (min-width: 568px) {
+      .name-item, .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input, .city-item input,.name-item div {
+      width: calc(50% - 20px);
+      }
+      .name-item div input {
+      width:97%;}
+      .name-item div label {
+      display:block;
+      padding-bottom:0px;
+      }
+
+      .check input{
+        width: 10px;
+        padding: 10px;   
+      }
+
+
+      }
+    </style>
+
+  </head>
+  <body onload="carregar()">
+    <div class="testbox">
+      <form>
+        <div class="banner">
+          <h1>Solicitação de Materiais</h1>
+        </div>
+        <p id="bandesc">Este fomulário destina-se a otimizar a recepção das 
+            solicitações de material pelo setor MPL da DIEL. 
+            Ele permite a padronização e melhor tratamento dos pedidos a serem recebidos e, por 
+            consequência, seu melhor atendimento. Por favor, preencha adequadamente todos os campos. 
+            Agradecemos pela colaboração!</p>
+            <br>
+        <div id="aux">
+            <h2>INFORMAÇÕES GERAIS DA SOLICITAÇÃO</h2>
+            <p>Informações iniciais requeridas para correto direcionamento da solicitação.</p>
+        <div class="item">
+          <label for="name">Nome do Solicitante<span>*</span></label>
+            <input id="name" type="text" name="name" placeholder="Nome do Solicitante" />
+        </div>
+        <div class="item">
+          <label for="bdate">Date de Entrega<span>*</span></label>
+          <input id="bdate" type="date" name="bdate" />
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="item">
+          <div class="name-item">
+            <div>
+              <label for="email">E-mail<span>*</span></label>
+              <input id="email" type="email" name="email" />
+            </div>
+            <div>
+              <label for="number">Telefone</label>
+              <input id="number" type="tel" name="number" />
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+
+            <!-- NOVA IMPLANTAÇÃO -->
+        <div id="resto" class="item">                
+            
+            <!-- <h2>NOVA IMPLANTAÇÃO</h2>
+                
+            <p>O material solicitado destina-se ao atendimento de uma nova implantação.
+
+                Após o processamento da solicitação, o setor MPL entrará em contato para informar sobre a preparação do 
+                material solicitado e sobre a disponibilidade para a retirada, bem como para esclarecer eventuais dúvidas.</p> -->
+                
+            <!-- <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="cliente">Cliente<span>*</span></label>
+                    <input id="cliente" type="text" name="cliente" />
+                  </div>
+                  <div>
+                    <label for="unidade">Unidade</label>
+                    <input id="unidade" type="text" name="unidade" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="uf">UF<span>*</span></label>
+                    <input id="uf" type="text" name="uf" />
+                  </div>
+                  <div>
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text" name="cidade" />
+                  </div>
+                  <div>
+                    <label for="cep">CEP</label>
+                    <input id="cep" type="text" name="cep" />
+                  </div>
+                  <div>
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" type="text" name="endereco" />
+                  </div>
+                </div>
+            </div> -->
+
+
+            <!-- MANUNTENÇÃO -->
+            <!-- <div class="item">
+                <h2>MANUNTENÇÃO</h2>
+                
+                <p>O material solicitado destina-se ao atendimento de um chamado de manutenção.
+
+                    Após o processamento da solicitação, o setor MPL entrará em contato para informar sobre 
+                    a preparação do material solicitado e sobre a disponibilidade para entrega, bem como para
+                     esclarecer eventuais dúvidas.</p>
+
+                <div class="check">
+
+                    <h3>SUGESTÃO DE URGÊNCIA</h3>
+                    
+                    <p>A sugestão de urgência é uma orientação ao setor MPL sobre a importância do atendimento 
+                        à solicitação (em relação à conclusão da atividade de manutenção). 
+                        A escolha da categoria da urgência deve ser feita com bom senso pelo 
+                        supervisor de campo solicitante (sempre após análise da solicitação 
+                        prévia feita pelos técnicos em campo), de modo a não atrapalhar o fluxo de trabalho do 
+                        setor e garantir o atendimento de todas as solicitações. Apesar da sugestão de urgência, 
+                        o atendimento estará sujeito ao fluxo de trabalho já existente do setor MPL.</p>
+
+                    <input type="checkbox" id="baixa" name="baixa" value="baixa">
+                    <label for="baixa">Baixa (o atendimento da solicitação não é crítico, podendo ocorrer em até 24 h) </label><br>
+                    <input type="checkbox" id="media" name="media" value="media">
+                    <label for="media">Média (o atendimento da solicitação não é crítico, podendo ocorrer no próximo período útil)</label><br>
+                    <input type="checkbox" id="alta" name="alta" value="alta">
+                    <label for="alta">Alta (o atendimento é crucial à finalização de atividade, devendo ocorrer ainda no mesmo período)</label><br>
+                </div>
+                <div class="name-item">
+                  <div>
+                    <label for="cliente">Cliente<span>*</span></label>
+                    <input id="cliente" type="text" name="cliente" />
+                  </div>
+                  <div>
+                    <label for="unidade">Unidade</label>
+                    <input id="unidade" type="text" name="unidade" />
+                  </div>
+                </div>
+              </div>
+
+            <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="uf">UF<span>*</span></label>
+                    <input id="uf" type="text" name="uf" />
+                  </div>
+                  <div>
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text" name="cidade" />
+                  </div>
+                  <div>
+                    <label for="cep">CEP</label>
+                    <input id="cep" type="text" name="cep" />
+                  </div>
+                  <div>
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" type="text" name="endereco" />
+                  </div>
+                </div>
+            </div> -->
+
+
+
+            <!-- REPOSIÇÃO PARA COLABORADOR -->
+            <!-- <h2>REPOSIÇÃO PARA COLABORADOR</h2>
+            <p>O material destina-se à reposição do kit de insumos para um colaborador credenciado.
+
+                Após o processamento da solicitação, o setor MPL entrará em contato para informar sobre a preparação do 
+                material solicitado e sobre a disponibilidade para a retirada, bem como para esclarecer eventuais dúvidas.</p>
+            <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="nome_rep">Nome do Colaborador<span>*</span></label>
+                    <input id="nome_rep" type="text" name="nome_rep" />
+                  </div>
+                  <div>
+                    <label for="cont_rep">Contato do Colaborador</label>
+                    <input id="cont_rep" type="text" name="cont_rep" />
+                  </div>
+                <div>
+            </div> -->
+
+        </div>
+
+        <div id="pfjur">
+            <!-- <div class="check">
+                <input onclick="selecionarFormPJ()" type="checkbox" id="ni" name="ni" value="ni">
+                <label for="ni"> Parceiro DIEL pessoa jurídica</label><br>
+                <input  onclick="selecionarFormPF()" type="checkbox" id="man" name="man" value="man">
+                <label for="man">Parceiro DIEL pessoa física</label><br>
+                <input onclick="selecionarFormCL()" type="checkbox" id="rep" name="rep" value="rep">
+                <label for="rep">Próprio cliente (não-recomendado)</label><br>
+            </div> -->
+        </div>
+
+
+        <!-- PESSOA FÍSICA -->
+        <!-- <h2>DESTINATÁRIO PESSOA FÍSICA</h2>
+        <p>O material solicitado será recebido por um parceiro pessoa física.</p> -->
+            <!-- <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="nome_dest_pf">Nome do destinatário<span>*</span></label>
+                    <input id="nome_dest_pf" type="text" name="nome_dest_pf" />
+                  </div>
+                  <div>
+                    <label for="cont_dest_pf">Contato do destinatário</label>
+                    <input id="cont_dest_pf" type="text" name="cont_dest_pf" />
+                  </div>
+                </div>
+            </div> -->
+
+
+              <!-- PESSOA JURÍDICA -->
+              <!-- <h2>DESTINATÁRIO PESSOA JURÍDICA</h2>
+              <p>O material solicitado será recebido por um parceiro pessoa jurídica.</p> -->
+            <!-- <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="cnpj_pj">CNPJ<span>*</span></label>
+                    <input id="cnpj_pj" type="text" name="cnpj_pj" />
+                  </div>
+                  <div>
+                    <label for="razao_pj">Razão Social</label>
+                    <input id="razao_pj" type="text" name="razao_pj" />
+                  </div>
+                </div>
+            </div>
+            <div class="item">
+                <label for="cont_dest_pj">Contato do destinatário<span>*</span></label>
+                <input id="cont_dest_pj" type="text" name="cont_dest_pj"/>
+            </div> -->
+
+
+              <!-- CLIENTE -->
+              <!-- <h2>DESTINATÁRIO PRÓPRIO CLIENTE</h2>
+              <p>O material solicitado será recebido pelo próprio cliente.</p> -->
+            <!-- <div class="item">
+                <div class="name-item">
+                  <div>
+                    <label for="cliente">Cliente<span>*</span></label>
+                    <input id="cliente" type="text" name="cliente" />
+                  </div>
+                  <div>
+                    <label for="unidade">Unidade</label>
+                    <input id="unidade" type="text" name="unidade" />
+                  </div>
+                </div>
+            </div>
+            <div class="item">
+                <label for="cont_dest_clt">Contato do destinatário<span>*</span></label>
+                <input id="cont_dest_clt" type="text" name="cont_dest_clt"/>
+            </div> -->
+
+
+
+            <!-- MATERIAL SOLICITADO -->
+            <div class="item">
+                <label for="mat_text">Material Solictiado<span>*</span></label>
+                  <input id="mat_text" type="text" name="mat_text" required/>
+             </div>
+             <div class="item">
+                <label for="mat_file">Material Solictiado<span>*</span></label>
+                  <input id="mat_file" type="file" name="mat_file" required/>
+             </div>
+
+             <div class="btn-next">
+                <button onclick="selecionarForm()" id="nxt">ENVIAR</button>
+            </div>
+    </div>
+    </form>
+
+
+    <script src="./script.js"></script>
+  </body>
+</html>
